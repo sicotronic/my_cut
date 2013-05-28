@@ -1,0 +1,12 @@
+This small program is my own version of the 'cut' program provided in Unix, but it is meant to work with csv files, specially with tab-delimited files.
+The program is written in the file 'my_cut.py'.
+Instructions for the usage are giving when '-h' or '--help' are given in the arguments.
+
+There are two input files to test the program called test_input1 and test_input2.
+The output files are the results of the following executions:
+
+my_cut.py test_input1.csv 0-3,15/9,8:12,5,6,7 output1.csv
+
+my_cut.py test_input2.csv 0-3,4-1,2,0 output2.csv
+
+Juan Ignacio Navarro Horñiacek.
