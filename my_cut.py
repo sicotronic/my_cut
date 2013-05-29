@@ -14,6 +14,11 @@ NEW_LINE = '\r\n'
 
 
 def retrieve_columns(input_file, requested_list, output_file, delim=DELIMITER):
+    """
+    It writes in the output file the fields requested from the input file in 
+    the given fields list. If a requested field is not valid, the output file 
+    is removed and the program gives an error message and finishes.
+    """
     columns = []
     source = open(input_file, 'r', ENCODING)
     target = open(output_file, 'wb', ENCODING)
@@ -31,7 +36,7 @@ def retrieve_columns(input_file, requested_list, output_file, delim=DELIMITER):
 		    if len(requested_aux) > 0:
                         field += delim
                     string_row += field
-                else:#I should give errors on stderr
+                else:
                     stderr.write('Error in input line %d ' % line_number)
                     stderr.write('there is no column %d \n' % column_number)
                     stderr.write('no output file was generated \n')
@@ -39,15 +44,19 @@ def retrieve_columns(input_file, requested_list, output_file, delim=DELIMITER):
                     target.close()
                     remove(output_file)
                     exit(0)
-                    # I should clean the output_file here
             target.write(string_row + NEW_LINE)
         line_number += 1
     return columns
 
 
 def fields_list_from_range(first, second):
+    """
+    It generates the list of consecutive field numbers from a 
+    range of fields expression.
+    """
     res = []
     if first > second:
+	# the range goes backwars so I reverse the list
         res = list(range(second, first + 1))[::-1]
     else:
         if first < second:
@@ -58,6 +67,10 @@ def fields_list_from_range(first, second):
 
 
 def solve_field_range(field):
+    """
+    It takes a string containing either a field number, or a range of fields, 
+    and it returns a list of the fields numbers contained in that string.
+    """
     for symbol in RANGE_SYMBOLS:
         if symbol in field:
             fields_range = field.split(symbol)
@@ -75,6 +88,10 @@ def solve_field_range(field):
 
 
 def get_numeric_fields_list(string_fields_list):
+    """
+    It turns the fields list string given in the command line into a list 
+    with the explicit number of fields to retrieve in the requested order.
+    """
     res = []
     for field in (string_fields_list.split(LIST_SEPARATOR)):
         res += solve_field_range(field)
